@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  proxy-connect-injector
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: proxy-connect-injector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy-connect-injector
+  template:
+    metadata:
+      labels:
+        app: proxy-connect-injector
+    spec:
+      hostNetwork: true
+      containers:
+      - name: nginx-proxy
+        image: nginx:latest
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "256Mi"
+          requests:
+            cpu: "0.1"
+            memory: "128Mi"
+        ports:
+        - containerPort: {{ .Values.connectInject.proxy.httpsPort | default 9443 }}
+          hostPort: {{ .Values.connectInject.proxy.httpsPort | default 9443 }}  
+          name: webhook
+        volumeMounts:
+        - mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+          name: proxy-nginx-conf
+        - mountPath: /etc/resolv.conf
+          subPath: resolv.conf
+          readOnly: true
+          name: proxy-dns-resolv-conf
+      volumes:
+      - name: proxy-nginx-conf
+        configMap:
+          name: proxy-nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      - name: proxy-dns-resolv-conf
+        configMap:
+          name: proxy-dns-resolv-conf 
+          items:
+            - key: resolv.conf
+              path: resolv.conf
+      - name: log
+        emptyDir: {}

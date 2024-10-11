@@ -25,7 +25,11 @@ webhooks:
   - v1
   clientConfig:
     service:
-      name: {{ template "consul.fullname" . }}-connect-injector
+      name: {{- if .Values.connectInject.proxy.enabled }}
+      {{ template "consul.fullname" . }}-connect-injector
+      {{- else }}
+      proxy-connect-injector
+      {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /validate-v1alpha1-gatewaypolicy
 - name: validate-registration.consul.hashicorp.com
@@ -41,7 +45,11 @@ webhooks:
   - v1
   clientConfig:
     service:
-      name: {{ template "consul.fullname" . }}-connect-injector
+      name: {{- if .Values.connectInject.proxy.enabled }}
+      {{ template "consul.fullname" . }}-connect-injector
+      {{- else }}
+      proxy-connect-injector
+      {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /validate-v1alpha1-registration
 {{- end }}

@@ -2542,6 +2542,13 @@ connectInject:
       #
       # @type: string
       annotations: null
+    
+  # If true, the proxy will be enabled for private EKS or GKE clusters.
+  proxy:
+    enabled: false
+    httpsPort: 9443
+    dns:
+      nameserver: 172.20.0.10
 
   # Configures consul-cni plugin for Consul Service mesh services
   cni:
