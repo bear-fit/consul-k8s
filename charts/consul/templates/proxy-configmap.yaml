@@ -1,5 +1,4 @@
 {{- if .Values.connectInject.proxy.enabled }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -39,4 +38,4 @@ data:
         ssl_prefer_server_ciphers   on;
       }
     }
----
+{{- end }}

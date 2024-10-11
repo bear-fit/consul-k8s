@@ -26,9 +26,9 @@ webhooks:
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /validate-v1alpha1-gatewaypolicy
@@ -46,9 +46,9 @@ webhooks:
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /validate-v1alpha1-registration

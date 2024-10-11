@@ -2547,6 +2547,13 @@ connectInject:
   proxy:
     enabled: false
     httpsPort: 9443
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "100m"
+        memory: "256Mi"
     dns:
       nameserver: 172.20.0.10
 

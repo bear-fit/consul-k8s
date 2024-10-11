@@ -15,9 +15,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-proxydefaults
@@ -40,9 +40,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-mesh
@@ -65,9 +65,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-servicedefaults
@@ -90,9 +90,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-serviceresolver
@@ -115,9 +115,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-servicerouter
@@ -140,9 +140,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-servicesplitter
@@ -165,9 +165,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-serviceintentions
@@ -190,9 +190,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-ingressgateway
@@ -215,9 +215,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-terminatinggateway
@@ -240,9 +240,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-exportedservices
@@ -265,9 +265,9 @@ webhooks:
 - clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-controlplanerequestlimits
@@ -287,11 +287,7 @@ webhooks:
       resources:
         - controlplanerequestlimits
   sideEffects: None
-- name: {{- if .Values.connectInject.proxy.enabled }}
-  {{ template "consul.fullname" . }}-connect-injector
-  {{- else }}
-  proxy-connect-injector
-  {{- end }}.consul.hashicorp.com
+- name: {{ template "consul.fullname" . }}-connect-injector.consul.hashicorp.com
   # The webhook will fail scheduling all pods that are not part of consul if all replicas of the webhook are unhealthy.
   objectSelector:
     matchExpressions:
@@ -306,9 +302,9 @@ webhooks:
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: "/mutate"
@@ -322,17 +318,13 @@ webhooks:
 {{ tpl .Values.connectInject.namespaceSelector . | indent 6 }}
 {{- end }}
 {{- if .Values.global.peering.enabled }}
-- name: {{- if .Values.connectInject.proxy.enabled }}
-  {{ template "consul.fullname" . }}-mutate-peeringacceptors.consul.hashicorp.com
-  {{- else }}
-  proxy-mutate-peeringacceptors.consul.hashicorp.com
-  {{- end }}
+- name: {{ template "consul.fullname" . }}-mutate-peeringacceptors.consul.hashicorp.com
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: "/mutate-v1alpha1-peeringacceptors"
@@ -351,17 +343,13 @@ webhooks:
   admissionReviewVersions:
   - "v1beta1"
   - "v1"
-- name: {{- if .Values.connectInject.proxy.enabled }}
-  {{ template "consul.fullname" . }}-mutate-peeringdialers.consul.hashicorp.com
-  {{- else }}
-  proxy-mutate-peeringdialers.consul.hashicorp.com
-  {{- end }}
+- name: {{ template "consul.fullname" . }}-connect-injector-mutate-peeringdialers.consul.hashicorp.com
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: "/mutate-v1alpha1-peeringdialers"
@@ -386,9 +374,9 @@ webhooks:
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-samenessgroup
@@ -412,9 +400,9 @@ webhooks:
   clientConfig:
     service:
       name: {{- if .Values.connectInject.proxy.enabled }}
-      {{ template "consul.fullname" . }}-connect-injector
+        proxy-connect-injector
       {{- else }}
-      proxy-connect-injector
+        {{ template "consul.fullname" . }}-connect-injector
       {{- end }}
       namespace: {{ .Release.Namespace }}
       path: /mutate-v1alpha1-jwtprovider

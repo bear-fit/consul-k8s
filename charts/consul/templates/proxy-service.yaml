@@ -1,3 +1,4 @@
+{{- if .Values.connectInject.proxy.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,5 +8,6 @@ spec:
   selector:
     app: proxy-connect-injector
   ports:
-    - port: {{ .Values.connectInject.proxy.httpsPort | default 9443 }}
+    - port: 443
       targetPort: webhook
+{{- end }}

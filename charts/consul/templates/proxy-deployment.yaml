@@ -1,3 +1,4 @@
+{{- if .Values.connectInject.proxy.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,11 +22,11 @@ spec:
         image: nginx:latest
         resources:
           limits:
-            cpu: "0.5"
-            memory: "256Mi"
+            cpu: {{ .Values.connectInject.proxy.resources.limits.cpu | default "0.1" }}
+            memory: {{ .Values.connectInject.proxy.resources.limits.memory | default "256Mi" }}
           requests:
-            cpu: "0.1"
-            memory: "128Mi"
+            cpu: {{ .Values.connectInject.proxy.resources.requests.cpu | default "0.1" }}
+            memory: {{ .Values.connectInject.proxy.resources.requests.memory | default "128Mi" }}
         ports:
         - containerPort: {{ .Values.connectInject.proxy.httpsPort | default 9443 }}
           hostPort: {{ .Values.connectInject.proxy.httpsPort | default 9443 }}  
@@ -54,3 +55,4 @@ spec:
               path: resolv.conf
       - name: log
         emptyDir: {}
+{{- end }}

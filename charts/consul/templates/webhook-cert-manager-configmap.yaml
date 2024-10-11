@@ -18,24 +18,24 @@ data:
         "name": "{{ template "consul.fullname" . }}-connect-injector",
         "tlsAutoHosts": [
           {{- if .Values.connectInject.proxy.enabled }}
-          "{{ template "consul.fullname" . }}-connect-injector",
-          {{- else }}
           "proxy-connect-injector",
+          {{- else }}
+          "{{ template "consul.fullname" . }}-connect-injector",
           {{- end }}
           {{- if .Values.connectInject.proxy.enabled }}
-          "{{ template "consul.fullname" . }}-connect-injector.{{ .Release.Namespace }}",
-          {{- else }}
           "proxy-connect-injector.{{ .Release.Namespace }}",
+          {{- else }}
+          "{{ template "consul.fullname" . }}-connect-injector.{{ .Release.Namespace }}",
           {{- end }}
           {{- if .Values.connectInject.proxy.enabled }}
-          "{{ template "consul.fullname" . }}-connect-injector.{{ .Release.Namespace }}.svc",
-          {{- else }}
           "proxy-connect-injector.{{ .Release.Namespace }}.svc",
+          {{- else }}
+          "{{ template "consul.fullname" . }}-connect-injector.{{ .Release.Namespace }}.svc",
           {{- end }}
           {{- if .Values.connectInject.proxy.enabled }}
-          "{{ template "consul.fullname" . }}-connect-injector.{{ .Release.Namespace }}.svc.cluster.local"
-          {{- else }}
           "proxy-connect-injector.{{ .Release.Namespace }}.svc.cluster.local"
+          {{- else }}
+          "{{ template "consul.fullname" . }}-connect-injector.{{ .Release.Namespace }}.svc.cluster.local"
           {{- end }}
         ],
         "secretName": "{{ template "consul.fullname" . }}-connect-inject-webhook-cert",
